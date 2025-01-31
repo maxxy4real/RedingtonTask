@@ -10,11 +10,12 @@ import {
   Box,
 } from "@mui/material";
 import { FC, useState } from "react";
-import { ImageType } from "./Helper/ImageConsts";
+import { ImageTypeRequest } from "./Helper/ImageConsts";
 import { MultiInput } from "./Helper/MultiInput";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { AddImage } from "./Helper/Api";
 
 interface FormProps {
   open: boolean;
@@ -22,12 +23,11 @@ interface FormProps {
 }
 
 export const Form: FC<FormProps> = ({ open, setOpen }) => {
-  const [value, setValue] = useState<ImageType>({
-    Id: "",
-    Title: "",
-    Image: "",
-    Keywords: [],
-    UploadDate: new Date(),
+  const [value, setValue] = useState<ImageTypeRequest>({
+    title: "",
+    image: "",
+    keywords: [],
+    uploadDate: new Date(),
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,7 +38,7 @@ export const Form: FC<FormProps> = ({ open, setOpen }) => {
   };
 
   const handleSubmit = () => {
-    console.log(value);
+    AddImage(value);
     location.reload();
   };
 
@@ -62,7 +62,7 @@ export const Form: FC<FormProps> = ({ open, setOpen }) => {
                 onChange={(input) =>
                   setValue({
                     ...value,
-                    Title: input.target.value,
+                    title: input.target.value,
                   })
                 }
               />
@@ -74,7 +74,7 @@ export const Form: FC<FormProps> = ({ open, setOpen }) => {
                 onChange={(input) =>
                   setValue({
                     ...value,
-                    Image: input.target.value,
+                    image: input.target.value,
                   })
                 }
               />
@@ -86,11 +86,11 @@ export const Form: FC<FormProps> = ({ open, setOpen }) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Date"
-                  value={dayjs(value.UploadDate)}
+                  value={dayjs(value.uploadDate)}
                   onChange={(newDate) =>
                     setValue({
                       ...value,
-                      UploadDate: newDate?.toDate() || new Date(),
+                      uploadDate: newDate?.toDate() || new Date(),
                     })
                   }
                 />

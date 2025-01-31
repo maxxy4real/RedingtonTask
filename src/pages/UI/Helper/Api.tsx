@@ -1,5 +1,5 @@
 import { ImageTypeDto } from "@/lib/data";
-import { ImageType } from "./ImageConsts";
+import { ImageType, ImageTypeRequest } from "./ImageConsts";
 
 export const GetAllImages = async (): Promise<ImageType[]> => {
   const res = await fetch("http://localhost:3000/api/images");
@@ -20,7 +20,7 @@ export const GetAllImages = async (): Promise<ImageType[]> => {
   return result;
 };
 
-export const AddImage = async (image: ImageType) => {
+export const AddImage = async (image: ImageTypeRequest) => {
   const res = await fetch("http://localhost:3000/api/images", {
     method: "POST",
     headers: {

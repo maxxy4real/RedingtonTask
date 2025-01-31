@@ -5,6 +5,14 @@ export interface ImageType {
   Keywords: string[];
   UploadDate: Date;
 }
+
+export interface ImageTypeRequest {
+  title: string;
+  image: string;
+  keywords: string[];
+  uploadDate: Date;
+}
+
 interface ImageConstType {
   Id: string;
   Keywords: string[];
