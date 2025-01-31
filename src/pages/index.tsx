@@ -1,7 +1,14 @@
+import { useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
+
+import {
+  getAllImagesAction,
+  addImageAction,
+  filterImagesAction,
+} from "@/actions/images";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,6 +21,10 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
+  useEffect(() => {
+    getAllImagesAction();
+  }, []);
+
   return (
     <>
       <Head>
@@ -63,6 +74,18 @@ export default function Home() {
             >
               Read our docs
             </a>
+            <a
+              onClick={() =>
+                addImageAction(
+                  "exampleImage",
+                  "https://via.placeholder.com/600",
+                  ["test"]
+                )
+              }
+            >
+              Add Image
+            </a>
+            <a onClick={() => filterImagesAction("cup")}>Filter Image</a>
           </div>
         </main>
         <footer className={styles.footer}>
