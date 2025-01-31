@@ -44,8 +44,8 @@ export const Form: FC<FormProps> = ({ open, setOpen }) => {
 
   return (
     <>
-      <Button color="primary" variant="outlined" onClick={handleClickOpen}>
-        Add image
+      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
+        Add Image
       </Button>
 
       <Dialog open={open} onClose={handleClose}>
