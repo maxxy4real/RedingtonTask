@@ -42,6 +42,14 @@ export function addImage(image: ImageData): ImageData[] {
   return images;
 }
 
+export function removeImage(id: string) {
+  const imageToRemove = images.find((image) => image.id === id);
+  if (!imageToRemove) return false;
+
+  images = images.filter((image) => image.id !== id);
+  return true;
+}
+
 export function filterImages(keyword: string): ImageData[] {
   const loweredKeyword = keyword.toLocaleLowerCase();
   const filteredImages = images.filter(
