@@ -12,15 +12,17 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { Images, ImageType, ImageKeywords } from "./Helper/ImageConsts";
+import { ImageType, ImageKeywords } from "./Helper/ImageConsts";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Header from "./Header";
 import dayjs, { Dayjs } from "dayjs";
 import { Form } from "./Form";
+import { GetAllImages } from "./Helper/Api";
 
 export const MainApp: FC = () => {
-  const [listOfImages, setListOfImages] = useState<ImageType[]>(Images);
+  //Filtered images
+  const [listOfImages, setListOfImages] = useState<ImageType[]>([]);
   const [search, setSearch] = useState<string>("");
   const [startDate, setStartDate] = useState<Dayjs | null>(
     dayjs(new Date()).subtract(1, "day")
@@ -29,9 +31,19 @@ export const MainApp: FC = () => {
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
 
+  //All images
+  const [images, setImages] = useState<ImageType[]>([]);
+
+  useEffect(() => {
+    GetAllImages()
+      .then((response) => response.json())
+      .then((json) => setImages(json))
+      .catch((error) => console.error(error));
+  }, []);
+
   useEffect(() => {
     setListOfImages(
-      Images.filter((image) => {
+      images.filter((image) => {
         return (
           image.Title.toLowerCase().includes(search.toLowerCase()) &&
           (!startDate || dayjs(image.UploadDate).isAfter(startDate)) &&
