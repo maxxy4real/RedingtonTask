@@ -1,16 +1,97 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ImageData } from "../../lib/data";
-import { getImages, addImage, filterImages } from "../../lib/data";
+import { getImages, addImage, filterImages, removeImage } from "../../lib/data";
 
 /**
  * @swagger
  * /api/images:
  *   get:
  *     description: Returns a list of images
+ *     parameters:
+ *       - in: query
+ *         name: keyword
+ *         schema:
+ *           type: string
+ *         description: Keyword to filter images
  *     responses:
  *       200:
- *         description: hello world
+ *         description: A list of images
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ImageData'
+ *       400:
+ *         description: Invalid keyword
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *   post:
+ *     description: Adds a new image
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               image:
+ *                 type: string
+ *               keywords:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       201:
+ *         description: Image added successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/ImageData'
+ *       400:
+ *         description: Missing title, image, or keywords
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *   delete:
+ *     description: Deletes an image
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the image to delete
+ *     responses:
+ *       200:
+ *         description: Image deleted successfully
+ *       404:
+ *         description: Image not found
+ *   all:
+ *     description: Method not allowed
+ *     responses:
+ *       405:
+ *         description: Method not allowed
+ *         headers:
+ *           Allow:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: string
  */
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
@@ -48,6 +129,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     };
     addImage(newImage);
     res.status(201).json(images);
+  } else if (req.method === "DELETE") {
+    const { query } = req;
+    const id: string = query.id as string;
+    const imageFound = removeImage(id);
+    res.status(imageFound ? 200 : 404).end();
   } else {
     res.setHeader("Allow", ["GET", "POST", "DELETE"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
