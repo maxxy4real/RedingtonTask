@@ -3,10 +3,6 @@ import Head from "next/head";
 import { MainApp } from "./UI/MainApp";
 
 export default function Home() {
-  useEffect(() => {
-    getAllImagesAction();
-  }, []);
-
   return (
     <>
       <Head>
