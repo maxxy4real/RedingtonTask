@@ -17,21 +17,8 @@ import { getImages, addImage, filterImages, removeImage } from "../../lib/data";
  *     responses:
  *       200:
  *         description: A list of images
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/ImageData'
  *       400:
  *         description: Invalid keyword
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
  *   post:
  *     description: Adds a new image
  *     requestBody:
@@ -52,21 +39,8 @@ import { getImages, addImage, filterImages, removeImage } from "../../lib/data";
  *     responses:
  *       201:
  *         description: Image added successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/ImageData'
  *       400:
  *         description: Missing title, image, or keywords
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
  *   delete:
  *     description: Deletes an image
  *     parameters:
@@ -86,12 +60,6 @@ import { getImages, addImage, filterImages, removeImage } from "../../lib/data";
  *     responses:
  *       405:
  *         description: Method not allowed
- *         headers:
- *           Allow:
- *             schema:
- *               type: array
- *               items:
- *                 type: string
  */
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
