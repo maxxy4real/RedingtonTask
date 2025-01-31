@@ -79,7 +79,8 @@ export default function Home() {
                 addImageAction(
                   "exampleImage",
                   "https://via.placeholder.com/600",
-                  ["test"]
+                  ["test"],
+                  new Date("2022-02-22")
                 )
               }
             >

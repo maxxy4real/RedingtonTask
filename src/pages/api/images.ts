@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ImageData } from "../../lib/data";
+import { ImageType } from "../../lib/data";
 import { getImages, addImage, filterImages, removeImage } from "../../lib/data";
 
 /**
@@ -75,28 +75,31 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
     res.status(200).json(images);
   } else if (req.method === "POST") {
-    const { title, image, keywords } = req.body as {
+    const { title, image, keywords, uploadDate } = req.body as {
       title?: string;
       image?: string;
       keywords?: string[];
+      uploadDate?: Date;
     };
 
-    if (!title || !image || !keywords) {
-      res.status(400).json({ error: "Missing title, image, or keywords" });
+    if (!title || !image || !keywords || !uploadDate) {
+      res
+        .status(400)
+        .json({ error: "Missing title, image, keywords or upload date" });
       return;
     }
 
     const images = getImages();
     const id = "data_id_" + (images.length + 1);
-    const newImage: ImageData = {
+    const newImage: ImageType = {
       id,
       title,
       image,
       keywords,
-      updateDate: new Date(),
+      uploadDate,
     };
     addImage(newImage);
-    res.status(201).json(images);
+    res.status(201).json(newImage);
   } else if (req.method === "DELETE") {
     const { query } = req;
     const id: string = query.id as string;

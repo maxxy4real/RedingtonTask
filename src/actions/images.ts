@@ -1,5 +1,7 @@
+import { ImageType } from "../lib/data";
+
 export const getAllImagesAction = async (): Promise<
-  ImageData[] | undefined
+  ImageType[] | undefined
 > => {
   try {
     const response = await fetch("/api/images");
@@ -16,7 +18,7 @@ export const getAllImagesAction = async (): Promise<
 
 export const filterImagesAction = async (
   keyword: string
-): Promise<ImageData[] | undefined> => {
+): Promise<ImageType[] | undefined> => {
   try {
     const response = await fetch(`/api/images?keyword=${keyword}`);
     if (!response.ok) {
@@ -33,15 +35,16 @@ export const filterImagesAction = async (
 export const addImageAction = async (
   title: string,
   image: string,
-  keywords: string[]
-): Promise<ImageData[] | undefined> => {
+  keywords: string[],
+  uploadDate: Date
+): Promise<ImageType | undefined> => {
   try {
     const response = await fetch("/api/images", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, image, keywords }),
+      body: JSON.stringify({ title, image, keywords, uploadDate }),
     });
     if (!response.ok) {
       throw new Error("Failed to post image");

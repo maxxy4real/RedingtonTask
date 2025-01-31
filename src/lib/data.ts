@@ -1,19 +1,19 @@
-export interface ImageData {
+export interface ImageType {
   id: string;
   title: string;
   image: string;
   keywords: string[];
-  updateDate: Date;
+  uploadDate: Date;
 }
 
-let images: ImageData[] = [
+let images: ImageType[] = [
   {
     id: "data_id_1",
     title: "Book",
     image:
       "https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4",
     keywords: ["book", "study", "pages"],
-    updateDate: new Date("2021-01-01"),
+    uploadDate: new Date("2021-01-01"),
   },
   {
     id: "data_id_2",
@@ -21,7 +21,7 @@ let images: ImageData[] = [
     image:
       "https://fastly.picsum.photos/id/29/4000/2670.jpg?hmac=rCbRAl24FzrSzwlR5tL-Aqzyu5tX_PA95VJtnUXegGU",
     keywords: ["mountains", "snow", "cold"],
-    updateDate: new Date("2022-02-22"),
+    uploadDate: new Date("2022-02-22"),
   },
   {
     id: "data_id_3",
@@ -29,17 +29,17 @@ let images: ImageData[] = [
     image:
       "https://fastly.picsum.photos/id/63/5000/2813.jpg?hmac=HvaeSK6WT-G9bYF_CyB2m1ARQirL8UMnygdU9W6PDvM",
     keywords: ["coffee", "cup", "mug"],
-    updateDate: new Date("2023-12-31"),
+    uploadDate: new Date("2023-12-31"),
   },
 ];
 
-export function getImages(): ImageData[] {
+export function getImages(): ImageType[] {
   return images;
 }
 
-export function addImage(image: ImageData): ImageData[] {
+export function addImage(image: ImageType): ImageType {
   images.push(image);
-  return images;
+  return image;
 }
 
 export function removeImage(id: string) {
@@ -50,7 +50,7 @@ export function removeImage(id: string) {
   return true;
 }
 
-export function filterImages(keyword: string): ImageData[] {
+export function filterImages(keyword: string): ImageType[] {
   const loweredKeyword = keyword.toLocaleLowerCase();
   const filteredImages = images.filter(
     (image) =>
