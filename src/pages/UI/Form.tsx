@@ -25,7 +25,7 @@ export const Form: FC<FormProps> = ({ open, setOpen }) => {
   const [value, setValue] = useState<ImageType>({
     Id: "",
     Title: "",
-    Url: "",
+    Image: "",
     Keywords: [],
     UploadDate: new Date(),
   });
@@ -74,7 +74,7 @@ export const Form: FC<FormProps> = ({ open, setOpen }) => {
                 onChange={(input) =>
                   setValue({
                     ...value,
-                    Url: input.target.value,
+                    Image: input.target.value,
                   })
                 }
               />

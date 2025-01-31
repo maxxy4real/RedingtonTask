@@ -1,7 +1,7 @@
-import { ImageType } from "../lib/data";
+import { ImageTypeDto } from "../lib/data";
 
 export const getAllImagesAction = async (): Promise<
-  ImageType[] | undefined
+  ImageTypeDto[] | undefined
 > => {
   try {
     const response = await fetch("/api/images");
@@ -18,7 +18,7 @@ export const getAllImagesAction = async (): Promise<
 
 export const filterImagesAction = async (
   keyword: string
-): Promise<ImageType[] | undefined> => {
+): Promise<ImageTypeDto[] | undefined> => {
   try {
     const response = await fetch(`/api/images?keyword=${keyword}`);
     if (!response.ok) {
@@ -37,7 +37,7 @@ export const addImageAction = async (
   image: string,
   keywords: string[],
   uploadDate: Date
-): Promise<ImageType | undefined> => {
+): Promise<ImageTypeDto | undefined> => {
   try {
     const response = await fetch("/api/images", {
       method: "POST",

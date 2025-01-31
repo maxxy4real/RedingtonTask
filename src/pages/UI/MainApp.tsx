@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { ImageType, ImageKeywords } from "./Helper/ImageConsts";
+import { ImageType, getImageKeywords } from "./Helper/ImageConsts";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Header from "./Header";
@@ -24,20 +24,22 @@ export const MainApp: FC = () => {
   //Filtered images
   const [listOfImages, setListOfImages] = useState<ImageType[]>([]);
   const [search, setSearch] = useState<string>("");
-  const [startDate, setStartDate] = useState<Dayjs | null>(
-    dayjs(new Date()).subtract(1, "day")
-  );
+  const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(new Date()));
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
+  const [imageKeywords, setImageKeywords] = useState<string[]>([]);
 
   //All images
   const [images, setImages] = useState<ImageType[]>([]);
 
   useEffect(() => {
     GetAllImages()
-      .then((response) => response.json())
-      .then((json) => setImages(json))
+      .then((json) => {
+        setImages(json);
+        setListOfImages(json);
+        setImageKeywords(getImageKeywords(json));
+      })
       .catch((error) => console.error(error));
   }, []);
 
@@ -119,7 +121,7 @@ export const MainApp: FC = () => {
                 onChange={(e) => setSelectedNames(e.target.value as string[])}
                 input={<OutlinedInput label="Keywords" />}
               >
-                {ImageKeywords.map((keyword) => (
+                {imageKeywords.map((keyword) => (
                   <MenuItem key={keyword} value={keyword}>
                     {keyword}
                   </MenuItem>
@@ -140,8 +142,8 @@ export const MainApp: FC = () => {
             return (
               <ImageListItem key={item.Id}>
                 <img
-                  srcSet={`${item.Url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  src={`${item.Url}?w=164&h=164&fit=crop&auto=format`}
+                  srcSet={`${item.Image}`}
+                  src={`${item.Image}`}
                   alt={item.Keywords.join(", ")}
                   loading="lazy"
                 />
