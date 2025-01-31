@@ -1,5 +1,7 @@
 import {
   Box,
+  FormControl,
+  Grid,
   ImageList,
   ImageListItem,
   ImageListItemBar,
@@ -7,6 +9,7 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
+  Typography,
 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { Images, ImageType, ImageKeywords } from "./ImageConsts";
@@ -14,13 +17,17 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Header from "./Header";
 import dayjs, { Dayjs } from "dayjs";
+import { Form } from "./Form";
 
 export const MainApp: FC = () => {
   const [listOfImages, setListOfImages] = useState<ImageType[]>(Images);
   const [search, setSearch] = useState<string>("");
-  const [startDate, setStartDate] = useState<Dayjs | null>(dayjs(new Date()));
+  const [startDate, setStartDate] = useState<Dayjs | null>(
+    dayjs(new Date()).subtract(1, "day")
+  );
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(new Date()));
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setListOfImages(
@@ -41,40 +48,73 @@ export const MainApp: FC = () => {
       <Header>
         <Box
           display={"flex"}
-          justifyContent={"space-between"}
-          paddingBottom={"20px"}
+          flexDirection={"column"}
+          justifySelf={"center"}
+          paddingBottom={"40px"}
         >
-          <Input
-            id="input"
-            placeholder="Title"
-            onChange={(input) => setSearch(input.target.value)}
-          />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Box display={"flex"} justifyContent={"flex-end"}>
-              <DatePicker
-                label="Start Date"
-                value={startDate}
-                onChange={(newDate) => setStartDate(newDate)}
-              />
-              <DatePicker
-                label="End Date"
-                value={endDate}
-                onChange={(newDate) => setEndDate(newDate)}
-              />
-            </Box>
-          </LocalizationProvider>
-          <Select
-            multiple
-            value={selectedNames}
-            onChange={(e) => setSelectedNames(e.target.value as string[])}
-            input={<OutlinedInput label="Keywords" />}
-          >
-            {ImageKeywords.map((keyword) => (
-              <MenuItem key={keyword} value={keyword}>
-                {keyword}
-              </MenuItem>
-            ))}
-          </Select>
+          <Box>
+            <Typography variant="h2">Image Gallery</Typography>
+          </Box>
+          <Box marginTop="40px" marginLeft="120px">
+            <Form open={open} setOpen={setOpen}></Form>
+          </Box>
+        </Box>
+
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignContent={"center"}
+          padding={"20px"}
+        >
+          <Box padding={"20px"}>
+            <Input
+              id="input"
+              placeholder="Search"
+              onChange={(input) => setSearch(input.target.value)}
+            />
+          </Box>
+          <Box display="flex" padding={"20px"}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Box display={"flex"} justifyContent={"flex-end"}>
+                <Box paddingRight="10px">
+                  <DatePicker
+                    label="Start Date"
+                    value={startDate}
+                    onChange={(newDate) => setStartDate(newDate)}
+                  />
+                </Box>
+                <Box>
+                  <DatePicker
+                    label="End Date"
+                    value={endDate}
+                    onChange={(newDate) => setEndDate(newDate)}
+                  />
+                </Box>
+              </Box>
+            </LocalizationProvider>
+          </Box>
+          <Box padding={"12px"} display={"flex"}>
+            <Typography paddingTop={"20px"} variant="subtitle1">
+              Filter:
+            </Typography>
+
+            <FormControl sx={{ m: 1, width: 100 }}>
+              <Select
+                fullWidth
+                multiple
+                label="Keyword"
+                value={selectedNames}
+                onChange={(e) => setSelectedNames(e.target.value as string[])}
+                input={<OutlinedInput label="Keywords" />}
+              >
+                {ImageKeywords.map((keyword) => (
+                  <MenuItem key={keyword} value={keyword}>
+                    {keyword}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
         </Box>
       </Header>
       <Box
