@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, useEffect, useState } from "react";
-import { Images, ImageType, ImageKeywords } from "./ImageConsts";
+import { Images, ImageType, ImageKeywords } from "./Helper/ImageConsts";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Header from "./Header";

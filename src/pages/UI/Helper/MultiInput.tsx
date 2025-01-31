@@ -2,7 +2,7 @@
 
 import { Chip, TextField } from "@mui/material";
 import { FC, SetStateAction, useState } from "react";
-import { ImageType } from "../ImageConsts";
+import { ImageType } from "./ImageConsts";
 
 interface MultiInputProps {
   values: ImageType;

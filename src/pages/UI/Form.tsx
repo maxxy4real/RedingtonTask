@@ -10,7 +10,7 @@ import {
   Box,
 } from "@mui/material";
 import { FC, useState } from "react";
-import { ImageType } from "./ImageConsts";
+import { ImageType } from "./Helper/ImageConsts";
 import { MultiInput } from "./Helper/MultiInput";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
