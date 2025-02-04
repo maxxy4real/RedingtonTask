@@ -1,7 +1,6 @@
 import {
   Box,
   FormControl,
-  Grid,
   ImageList,
   ImageListItem,
   ImageListItemBar,
@@ -55,7 +54,7 @@ export const MainApp: FC = () => {
         );
       })
     );
-  }, [search, startDate, endDate, selectedNames]);
+  }, [search, startDate, endDate, selectedNames, images]);
 
   return (
     <>

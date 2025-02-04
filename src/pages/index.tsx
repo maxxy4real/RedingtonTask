@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import Head from "next/head";
-import { MainApp } from "./UI/MainApp";
+import { MainApp } from "../components/MainApp";
 
 export default function Home() {
   return (
