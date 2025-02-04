@@ -1,4 +1,4 @@
-export interface ImageType {
+export interface ImageTypeDto {
   id: string;
   title: string;
   image: string;
@@ -6,7 +6,7 @@ export interface ImageType {
   uploadDate: Date;
 }
 
-let images: ImageType[] = [
+let images: ImageTypeDto[] = [
   {
     id: "data_id_1",
     title: "Book",
@@ -33,11 +33,11 @@ let images: ImageType[] = [
   },
 ];
 
-export function getImages(): ImageType[] {
+export function getImages(): ImageTypeDto[] {
   return images;
 }
 
-export function addImage(image: ImageType): ImageType {
+export function addImage(image: ImageTypeDto): ImageTypeDto {
   images.push(image);
   return image;
 }
@@ -50,7 +50,7 @@ export function removeImage(id: string) {
   return true;
 }
 
-export function filterImages(keyword: string): ImageType[] {
+export function filterImages(keyword: string): ImageTypeDto[] {
   const loweredKeyword = keyword.toLocaleLowerCase();
   const filteredImages = images.filter(
     (image) =>

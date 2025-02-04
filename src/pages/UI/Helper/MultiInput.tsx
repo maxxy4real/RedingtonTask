@@ -2,22 +2,22 @@
 
 import { Chip, TextField } from "@mui/material";
 import { FC, SetStateAction, useState } from "react";
-import { ImageType } from "./ImageConsts";
+import { ImageTypeRequest } from "./ImageConsts";
 
 interface MultiInputProps {
-  values: ImageType;
-  setValues: (value: SetStateAction<ImageType>) => void;
+  values: ImageTypeRequest;
+  setValues: (value: SetStateAction<ImageTypeRequest>) => void;
 }
 
 export const MultiInput: FC<MultiInputProps> = ({ values, setValues }) => {
-  const keyWords = values.Keywords;
+  const keyWords = values.keywords;
   const [value, setValue] = useState<string>("");
 
   const handleEnter = (e: { key: string }) => {
     if (e.key === "Enter" && value !== "" && !keyWords.includes(value)) {
       setValues({
         ...values,
-        Keywords: [...keyWords, value],
+        keywords: [...keyWords, value],
       });
       setValue("");
     }
@@ -32,7 +32,7 @@ export const MultiInput: FC<MultiInputProps> = ({ values, setValues }) => {
   const handleValueDelete = (item: string) => {
     setValues({
       ...values,
-      Keywords: keyWords.filter((v) => v !== item),
+      keywords: keyWords.filter((v: string) => v !== item),
     });
   };
 

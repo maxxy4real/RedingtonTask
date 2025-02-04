@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ImageType } from "../../lib/data";
+import { ImageTypeDto } from "../../lib/data";
 import { getImages, addImage, filterImages, removeImage } from "../../lib/data";
 
 /**
@@ -91,7 +91,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const images = getImages();
     const id = "data_id_" + (images.length + 1);
-    const newImage: ImageType = {
+    const newImage: ImageTypeDto = {
       id,
       title,
       image,

@@ -1,10 +1,18 @@
 export interface ImageType {
   Id: string;
   Title: string;
-  Url: string;
+  Image: string;
   Keywords: string[];
   UploadDate: Date;
 }
+
+export interface ImageTypeRequest {
+  title: string;
+  image: string;
+  keywords: string[];
+  uploadDate: Date;
+}
+
 interface ImageConstType {
   Id: string;
   Keywords: string[];
@@ -65,9 +73,9 @@ export const ImageConsts: ImageConstType[] = [
   },
 ];
 
-export const ImageKeywords: string[] = [
+export const getImageKeywords = (images: ImageType[]) => [
   ...new Set(
-    ImageConsts.reduce(
+    images.reduce(
       (acc: string[], image: ImageConstType) => [...acc, ...image.Keywords],
       []
     )
@@ -78,7 +86,7 @@ export const Images: ImageType[] = ImageConsts.map((imageConst, index) => {
   return {
     Id: index.toString(),
     Title: `Image ${index}`,
-    Url: imageConst.Id,
+    Image: imageConst.Id,
     Keywords: imageConst.Keywords,
     UploadDate: new Date(),
   };
