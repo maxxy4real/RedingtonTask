@@ -9,7 +9,7 @@
     "lint": "next lint",
     "playwright": "playwright test --ui",
     "test": "npx playwright test",
-    "report": "npx playwright show-report"
+    "report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -28,6 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "allure-playwright": "^3.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "typescript": "^5"
