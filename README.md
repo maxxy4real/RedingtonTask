@@ -20,7 +20,14 @@ npm run dev
 
 The Playwright UI can be run with the following command:
 ```bash
-npm run playwright
+npm run test
+```
+
+## Generating Test Reports
+
+The test report can be generated using the following command:
+```bash
+npm run report
 ```
 
 Alternatively, the [Playwright VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright) can be used. Tests should appear in the Test Explorer.
